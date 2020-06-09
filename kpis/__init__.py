@@ -54,6 +54,7 @@ def get_timestamp():
     return str(datetime.datetime.fromtimestamp(time.time()).strftime(
         '%m-%d-%Y %I:%M:%S%p'))
 
+
 @kpi_producer.route("/")
 def index():
     """
