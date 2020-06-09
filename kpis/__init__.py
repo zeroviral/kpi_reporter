@@ -2,7 +2,6 @@ import os
 import sqlite3
 import shelve
 import uuid
-import random
 from flask_restful import Resource, Api, reqparse
 from markdown import markdown
 from flask import Flask, g
