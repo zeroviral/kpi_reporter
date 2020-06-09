@@ -13,7 +13,7 @@ from json import JSONEncoder
 kpi_producer = Flask(__name__)
 
 # Now creating the API...
-kpi_api = Api(kpi_producer)
+kpi_producer_api = Api(kpi_producer)
 
 
 # Initialize our DB.
@@ -143,7 +143,7 @@ class KPI(Resource):
 
 # Create our endpoints.
 # Endpoint for interacting with the KPIList() object and its methods.
-kpi_api.add_resource(KPIList, '/kpis')
+kpi_producer_api.add_resource(KPIList, '/kpis')
 
 # Endpoint for interacting with the KPI() object and its methods.
-kpi_api.add_resource(KPI, '/kpis/<string:identifier>')
+kpi_producer_api.add_resource(KPI, '/kpis/<string:identifier>')
