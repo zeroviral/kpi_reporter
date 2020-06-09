@@ -1,10 +1,13 @@
 import os
 import sqlite3
 import shelve
+import time
 import uuid
+import datetime
 from flask_restful import Resource, Api, reqparse
 from markdown import markdown
 from flask import Flask, g
+from json import JSONEncoder
 
 # Just creating an instance of Flask...
 kpi_producer = Flask(__name__)
@@ -42,6 +45,15 @@ def create_uuid():
     return uuid.uuid4().hex
 
 
+def get_timestamp():
+    """
+    Return current timestamp.
+    Output value ex: 2018-12-25 09:27:53
+    :return:
+    """
+    return str(datetime.datetime.fromtimestamp(time.time()).strftime(
+        '%m-%d-%Y %I:%M:%S%p'))
+
 @kpi_producer.route("/")
 def index():
     """
@@ -78,16 +90,25 @@ class KPIList(Resource):
     def post(self):
         parser = reqparse.RequestParser()
 
-        parser.add_argument('identifier', required=False)
+        # Initialize our payload and the serialized object.
+        parser.add_argument('title_of_kpi', required=True)
         parser.add_argument('group', required=True)
-        parser.add_argument('created_at', required=True)
         parser.add_argument('kpi_info', required=True)
+
+        # We want to add a unique ID each time to the KPI.
+        # This will help with data analysis down the line.
+        # TODO: Figure out how to best implement this outside of argsparser.
+        parser.add_argument('identifier', required=False)
+        parser.add_argument('created_at', required=False)
 
         # Parse the arguments into an object
         args = parser.parse_args()
 
-        # Here we can set the identifier uniquely.
+        # Here we can set the parameters uniquely.
         args.identifier = create_uuid()
+
+
+        args.created_at = get_timestamp()
 
         shelf = get_db()
         shelf[args['identifier']] = args
