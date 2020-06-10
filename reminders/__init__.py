@@ -5,7 +5,7 @@ from reminders.endpoints.Reminder import Reminder
 from reminders.endpoints.RemindersList import RemindersList
 from reminders.endpoints.CreateReminder import CreateReminder
 from reminders.custom_logger import CustomLogger
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Api
 from markdown import markdown
 from flask import Flask
 

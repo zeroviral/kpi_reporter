@@ -1,18 +1,13 @@
-import os
-from reminders.utils import get_timestamp, create_uuid
 from reminders import database_utils
 from reminders import utils
-from reminders.endpoints.RemindersList import RemindersList
-from reminders.custom_logger import CustomLogger
-from flask_restful import Resource, Api, reqparse
-from markdown import markdown
-from flask import Flask
+from flask_restful import Resource, reqparse
 
 
 class CreateReminder(Resource):
     """
     Endpoint for creating a SINGLE reminder.
     """
+
     @staticmethod
     def post():
         parser = reqparse.RequestParser()

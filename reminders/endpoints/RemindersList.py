@@ -1,12 +1,6 @@
-import os
-import sqlite3
-import shelve
 from reminders import database_utils
-from reminders.utils import get_timestamp, create_uuid
 from reminders.custom_logger import CustomLogger
-from flask_restful import Resource, Api, reqparse
-from markdown import markdown
-from flask import Flask, g
+from flask_restful import Resource
 
 
 class RemindersList(Resource):
