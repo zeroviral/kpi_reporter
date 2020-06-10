@@ -1,4 +1,4 @@
-from custom_logger import CustomLogger
+from reminders.custom_logger import CustomLogger
 from reminders import reminders_producer
 
 

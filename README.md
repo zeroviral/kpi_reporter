@@ -68,10 +68,12 @@ If a reminders with an identifier already exists, it will simply be overwritten.
 
 ## Delete a reminders
 
-**Response**
-
 **Definition**
 
 `DELETE /reminders/<identifier>`
+
+**Response**
+
+- `204 ` No Content
 
 - `404 NOT FOUND` if the reminders does not exist

@@ -4,10 +4,10 @@ import shelve
 import time
 import uuid
 import datetime
+from reminders.custom_logger import CustomLogger
 from flask_restful import Resource, Api, reqparse
 from markdown import markdown
 from flask import Flask, g
-from json import JSONEncoder
 
 # Just creating an instance of Flask...
 reminders_producer = Flask(__name__)
@@ -69,10 +69,13 @@ def index():
         return markdown(content)
 
 
-class remindersList(Resource):
+class ReminderList(Resource):
     """
     Endpoint for dealing with the reminders list.
     """
+
+    def __init__(self):
+        self.logger = CustomLogger()
 
     # Each HTTP verb requires a method to be able to interact with each
     # endpoint.
@@ -85,6 +88,8 @@ class remindersList(Resource):
         for key in keys:
             reminders.append(shelf[key])
 
+        self.logger.logger.info("GET Request served successfully")
+
         # Return our payload in the following format.
         return {'message': 'Success', 'data': reminders}
 
@@ -92,9 +97,8 @@ class remindersList(Resource):
         parser = reqparse.RequestParser()
 
         # Initialize our payload and the serialized object.
-        parser.add_argument('title_of_reminders', required=True)
-        parser.add_argument('group', required=True)
-        parser.add_argument('reminders_info', required=True)
+        parser.add_argument('title_of_reminder', required=True)
+        parser.add_argument('completed', required=True)
 
         # We want to add a unique ID each time to the reminders.
         # This will help with data analysis down the line.
@@ -112,10 +116,10 @@ class remindersList(Resource):
         shelf = get_db()
         shelf[args['identifier']] = args
 
-        return {'message': 'reminders Registered', 'data': args}, 201
+        return {'message': 'Reminder Registered', 'data': args}, 201
 
 
-class reminders(Resource):
+class Reminders(Resource):
     """
     Endpoint for dealing with specified reminders individually.
     """
@@ -141,7 +145,7 @@ class reminders(Resource):
 
 # Create our endpoints.
 # Endpoint for interacting with the remindersList() object and its methods.
-reminders_producer_api.add_resource(remindersList, '/reminders')
+reminders_producer_api.add_resource(ReminderList, '/reminders')
 
 # Endpoint for interacting with the reminders() object and its methods.
-reminders_producer_api.add_resource(reminders, '/reminders/<string:identifier>')
+reminders_producer_api.add_resource(Reminders, '/reminders/<string:identifier>')

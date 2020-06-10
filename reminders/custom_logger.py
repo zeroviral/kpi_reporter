@@ -30,13 +30,13 @@ class CustomLogger:
             # TODO: Re-add the file handler below once a resource is allocated.
 
             # Add our File handler for file output.
-            # handlerToGoToFileLog = RotatingFileHandler(
-            #     'data/logs/logging.log',
-            #     backupCount=5,
-            #     maxBytes=1024000
-            # )
-            # handlerToGoToFileLog.setFormatter(formatter)
+            handlerToGoToFileLog = RotatingFileHandler(
+                'logging.log',
+                backupCount=5,
+                maxBytes=1024000
+            )
+            handlerToGoToFileLog.setFormatter(formatter)
 
             # Add our handlers.
             self.logger.addHandler(handlerToGoToSysOutput)
-            # self.logger.addHandler(handlerToGoToFileLog)
+            self.logger.addHandler(handlerToGoToFileLog)
