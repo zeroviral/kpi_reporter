@@ -10,10 +10,10 @@ from flask import Flask, g
 from json import JSONEncoder
 
 # Just creating an instance of Flask...
-kpi_producer = Flask(__name__)
+reminders_producer = Flask(__name__)
 
 # Now creating the API...
-kpi_producer_api = Api(kpi_producer)
+reminders_producer_api = Api(reminders_producer)
 
 
 # Initialize our DB.
@@ -23,7 +23,7 @@ def get_db():
         #     current_app.config['DATABASE'],
         #     detect_types=sqlite3.PARSE_DECLTYPES
         # )
-        g.db = shelve.open("kpis.db")
+        g.db = shelve.open("reminders.db")
         g.db.row_factory = sqlite3.Row
 
     return g.db
@@ -55,13 +55,13 @@ def get_timestamp():
         '%m-%d-%Y %I:%M:%S%p'))
 
 
-@kpi_producer.route("/")
+@reminders_producer.route("/")
 def index():
     """
     Present the readme at the index, duh...
     :return: The readme.
     """
-    with open(os.path.dirname(kpi_producer.root_path) + '/README.md', 'r') as readme:
+    with open(os.path.dirname(reminders_producer.root_path) + '/README.md', 'r') as readme:
 
         content = readme.read()
 
@@ -69,9 +69,9 @@ def index():
         return markdown(content)
 
 
-class KPIList(Resource):
+class remindersList(Resource):
     """
-    Endpoint for dealing with the KPIs list.
+    Endpoint for dealing with the reminders list.
     """
 
     # Each HTTP verb requires a method to be able to interact with each
@@ -80,23 +80,23 @@ class KPIList(Resource):
         shelf = get_db()
         keys = list(shelf.keys())
 
-        kpis = []
+        reminders = []
 
         for key in keys:
-            kpis.append(shelf[key])
+            reminders.append(shelf[key])
 
         # Return our payload in the following format.
-        return {'message': 'Success', 'data': kpis}
+        return {'message': 'Success', 'data': reminders}
 
     def post(self):
         parser = reqparse.RequestParser()
 
         # Initialize our payload and the serialized object.
-        parser.add_argument('title_of_kpi', required=True)
+        parser.add_argument('title_of_reminders', required=True)
         parser.add_argument('group', required=True)
-        parser.add_argument('kpi_info', required=True)
+        parser.add_argument('reminders_info', required=True)
 
-        # We want to add a unique ID each time to the KPI.
+        # We want to add a unique ID each time to the reminders.
         # This will help with data analysis down the line.
         # TODO: Figure out how to best implement this outside of argsparser.
         parser.add_argument('identifier', required=False)
@@ -107,43 +107,41 @@ class KPIList(Resource):
 
         # Here we can set the parameters uniquely.
         args.identifier = create_uuid()
-
-
         args.created_at = get_timestamp()
 
         shelf = get_db()
         shelf[args['identifier']] = args
 
-        return {'message': 'KPI Registered', 'data': args}, 201
+        return {'message': 'reminders Registered', 'data': args}, 201
 
 
-class KPI(Resource):
+class reminders(Resource):
     """
-    Endpoint for dealing with specified KPIs individually.
+    Endpoint for dealing with specified reminders individually.
     """
     def get(self, identifier):
         shelf = get_db()
 
         # If the key does not exist in the data store, return a 404 error.
         if identifier not in shelf:
-            return {'message': 'KPI not found', 'data': {}}, 404
+            return {'message': 'reminders not found', 'data': {}}, 404
 
-        return {'message': 'KPI found', 'data': shelf[identifier]}, 200
+        return {'message': 'reminders found', 'data': shelf[identifier]}, 200
 
     def delete(self, identifier):
         shelf = get_db()
 
         # If the key does not exist in the data store, return a 404 error.
         if not (identifier in shelf):
-            return {'message': 'KPI not found', 'data': {}}, 404
+            return {'message': 'reminders not found', 'data': {}}, 404
 
         del shelf[identifier]
         return '', 204
 
 
 # Create our endpoints.
-# Endpoint for interacting with the KPIList() object and its methods.
-kpi_producer_api.add_resource(KPIList, '/kpis')
+# Endpoint for interacting with the remindersList() object and its methods.
+reminders_producer_api.add_resource(remindersList, '/reminders')
 
-# Endpoint for interacting with the KPI() object and its methods.
-kpi_producer_api.add_resource(KPI, '/kpis/<string:identifier>')
+# Endpoint for interacting with the reminders() object and its methods.
+reminders_producer_api.add_resource(reminders, '/reminders/<string:identifier>')

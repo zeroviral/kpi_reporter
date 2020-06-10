@@ -1,5 +1,5 @@
-# kpi_reporter
-A grassroots reporter to sift information and curate KPIs based on multiple sources of data.
+# reminders_reporter
+A grassroots reporter to sift information and curate reminders based on multiple sources of data.
 
 
 ## Usage
@@ -8,14 +8,17 @@ All responses will have the form:
 
 ```json
 {
-  "data": "Some data here bla blah blahhhh",
-  "message": "If you sell your turnips on Sunday, you make more bells."
+  "title_of_reminders": "<title_of_reminders>",
+  "complete": "<boolean>",
+  "reminders_details": "<details> if applicable, else <title_of_reminders>",
+  "identifier": "<unique_id>", 
+  "created_at": "<datetime.datetime> timestamp at point of db entry."
 }
 ```
 
-## List Of all KPIs sorted by object reference
+## List Of all reminders sorted by object reference
 
-`GET /kpis`
+`GET /reminders`
 
 **Response**
 
@@ -24,51 +27,51 @@ All responses will have the form:
 ```json
     [
       {
-        "identifier": "KPIs Completed Today",
-        "name": "KPIs Complete (24HR)",
+        "identifier": "reminders Completed Today",
+        "name": "reminders Complete (24HR)",
         "task_bucket": "24HR"
       },
 
       {
-        "identifier": "KPIs Completed For the Week",
-        "name": "KPIs Completed (7D)",
+        "identifier": "reminders Completed For the Week",
+        "name": "reminders Completed (7D)",
         "task_bucket": "7D"
       }
     ]
 ```
 
-### Adding KPIs
+### Adding reminders
 
 **Definition**
 
-`POST /create_kpis`
+`POST /create_reminders`
 
 **Arguments**
 
-- `"identifier":string` A global identifier for a KPi, unique.
-- `"group":string` A name for the KPI group. Can ONLY be Complete/Incomplete.
-- `"created_at":string` The timestamp at which point the KPI was created.
+- `"identifier":string` A global identifier for a reminders, unique.
+- `"group":string` A name for the reminders group. Can ONLY be Complete/Incomplete.
+- `"created_at":string` The timestamp at which point the reminders was created.
 
-If a KPI with an identifier already exists, it will simply be overwritten.
+If a reminders with an identifier already exists, it will simply be overwritten.
 
 **Response**
 
 - `201 Created` on success:
 ```json
 {
-  "identifier": "Your KPI Title",
+  "identifier": "Your reminders Title",
   "group": "Complete",
   "created_at": "[ 06-09-2020 21:21:48 PM ]"
 }
 ```
-- `404 NOT FOUND` if the KPI does not exist
+- `404 NOT FOUND` if the reminders does not exist
 
-## Delete a KPI
+## Delete a reminders
 
 **Response**
 
 **Definition**
 
-`DELETE /kpis/<identifier>`
+`DELETE /reminders/<identifier>`
 
-- `404 NOT FOUND` if the KPI does not exist
+- `404 NOT FOUND` if the reminders does not exist
