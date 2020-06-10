@@ -11,18 +11,20 @@ class Reminder(Resource):
         shelf = database_utils.get_db()
 
         # If the key does not exist in the data store, return a 404 error.
+        # TODO: Change this to the database lookup.
         if identifier not in shelf:
-            return {'message': 'reminders not found', 'data': {}}, 404
+            return {'message': 'Reminder not found', 'data': {}}, 404
 
-        return {'message': 'reminders found', 'data': shelf[identifier]}, 200
+        return {'message': 'Reminder found', 'data': shelf[identifier]}, 200
 
     @staticmethod
     def delete(identifier):
         shelf = database_utils.get_db()
 
         # If the key does not exist in the data store, return a 404 error.
-        if not (identifier in shelf):
-            return {'message': 'reminders not found', 'data': {}}, 404
+        # TODO: Change this to database lookup.
+        if identifier not in shelf:
+            return {'message': 'Reminder not found', 'data': {}}, 404
 
         del shelf[identifier]
         return '', 204
