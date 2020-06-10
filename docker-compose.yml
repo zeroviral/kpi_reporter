@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  kpi_reporter:
+  device-registry:
     ## Build Doc file in current directory.
     build: .
     volumes:

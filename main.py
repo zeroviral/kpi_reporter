@@ -8,6 +8,7 @@ def main():
     reminders_producer.run(
         # '0.0.0.0' Allows to be access externally
         host='0.0.0.0',
+        port=80,
         debug=True
     )
 

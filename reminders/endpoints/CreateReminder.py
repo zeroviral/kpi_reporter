@@ -1,4 +1,4 @@
-from reminders import database_utils
+from reminders.utils import database_utils
 from reminders import utils
 from flask_restful import Resource, reqparse
 

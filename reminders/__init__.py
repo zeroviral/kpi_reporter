@@ -1,10 +1,9 @@
 import os
-from reminders.utils import get_timestamp, create_uuid
-from reminders import database_utils
+from reminders.utils.utils import get_timestamp, create_uuid
 from reminders.endpoints.Reminder import Reminder
 from reminders.endpoints.RemindersList import RemindersList
 from reminders.endpoints.CreateReminder import CreateReminder
-from reminders.custom_logger import CustomLogger
+from reminders.utils.custom_logger import CustomLogger
 from flask_restful import Api
 from markdown import markdown
 from flask import Flask

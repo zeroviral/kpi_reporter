@@ -1,5 +1,5 @@
-from reminders import database_utils
-from reminders.custom_logger import CustomLogger
+from reminders.utils import database_utils
+from reminders.utils.custom_logger import CustomLogger
 from flask_restful import Resource
 
 
