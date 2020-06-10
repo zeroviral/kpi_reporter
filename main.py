@@ -1,14 +1,13 @@
-from reminders.custom_logger import CustomLogger
+from reminders import logger
 from reminders import reminders_producer
 
 
 def main():
-    port = 80
-    logger = CustomLogger()
-    logger.logger.info("Running app on port: %i" % port)
+    port = 5000
+    logger.info("Running app on port: %i" % port)
     reminders_producer.run(
+        # '0.0.0.0' Allows to be access externally
         host='0.0.0.0',
-        port=80,
         debug=True
     )
 

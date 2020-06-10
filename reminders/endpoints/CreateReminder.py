@@ -13,8 +13,8 @@ class CreateReminder(Resource):
     """
     Endpoint for creating a SINGLE reminder.
     """
-
-    def post(self):
+    @staticmethod
+    def post():
         parser = reqparse.RequestParser()
 
         # Initialize our payload and the serialized object.

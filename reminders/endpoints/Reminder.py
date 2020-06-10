@@ -1,5 +1,4 @@
 from reminders import database_utils
-from reminders.custom_logger import CustomLogger
 from flask_restful import Resource
 
 
@@ -7,8 +6,8 @@ class Reminder(Resource):
     """
     Endpoint for dealing with specified reminders individually.
     """
-
-    def get(self, identifier):
+    @staticmethod
+    def get(identifier):
         shelf = database_utils.get_db()
 
         # If the key does not exist in the data store, return a 404 error.
@@ -17,7 +16,8 @@ class Reminder(Resource):
 
         return {'message': 'reminders found', 'data': shelf[identifier]}, 200
 
-    def delete(self, identifier):
+    @staticmethod
+    def delete(identifier):
         shelf = database_utils.get_db()
 
         # If the key does not exist in the data store, return a 404 error.
