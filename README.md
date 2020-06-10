@@ -25,19 +25,20 @@ All responses will have the form:
 - `200 OK` on success
 
 ```json
-    [
-      {
-        "identifier": "reminders Completed Today",
-        "name": "reminders Complete (24HR)",
-        "task_bucket": "24HR"
-      },
-
-      {
-        "identifier": "reminders Completed For the Week",
-        "name": "reminders Completed (7D)",
-        "task_bucket": "7D"
-      }
-    ]
+[
+    {
+      "reminder": "This is a reminder!",
+      "completed": "True",
+      "identifier": "<some_unique_ID>",
+      "created_at": "[ 06-09-2020 21:21:48 PM ]"
+    },
+    {
+      "reminder": "This is ANOTHER reminder!",
+      "completed": "False",
+      "identifier": "<some_other_unique_ID>",
+      "created_at": "[ 06-09-2020 23:21:48 PM ]"
+    }
+]
 ```
 
 ### Adding reminders
@@ -48,9 +49,8 @@ All responses will have the form:
 
 **Arguments**
 
-- `"identifier":string` A global identifier for a reminders, unique.
-- `"group":string` A name for the reminders group. Can ONLY be Complete/Incomplete.
-- `"created_at":string` The timestamp at which point the reminders was created.
+- `"reminder":string` A reminder taken from an input.
+- `"completed":boolean` A boolean value based on completion of reminder/task.
 
 If a reminders with an identifier already exists, it will simply be overwritten.
 
@@ -59,8 +59,9 @@ If a reminders with an identifier already exists, it will simply be overwritten.
 - `201 Created` on success:
 ```json
 {
-  "identifier": "Your reminders Title",
-  "group": "Complete",
+  "reminder": "This is a reminder!",
+  "completed": "True",
+  "identifier": "<some_ID>",
   "created_at": "[ 06-09-2020 21:21:48 PM ]"
 }
 ```
@@ -75,3 +76,5 @@ If a reminders with an identifier already exists, it will simply be overwritten.
 `DELETE /reminders/<identifier>`
 
 - `404 NOT FOUND` if the reminders does not exist
+
+- `204 DELETED` if the reminder exists, and is deleted.
