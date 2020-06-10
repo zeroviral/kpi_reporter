@@ -1,6 +1,23 @@
-# reminders_reporter
+# KPI Reporter
 A grassroots reporter to sift information and curate reminders based on multiple sources of data.
 
+To run the server locally, please have Docker Engine installed and running.
+
+You should be within the following folder:
+
+```log
+<path_to_your_project>/kpi_reporter
+```
+
+To then run the following command:
+```shell script
+docker-compose up --build
+```
+
+After this, the server (with default settings) should then be running on 
+```html
+http://localhost:5000/
+```
 
 ## Usage
 
@@ -8,9 +25,8 @@ All responses will have the form:
 
 ```json
 {
-  "title_of_reminders": "<title_of_reminders>",
+  "reminder": "<title_of_reminder>",
   "complete": "<boolean>",
-  "reminders_details": "<details> if applicable, else <title_of_reminders>",
   "identifier": "<unique_id>", 
   "created_at": "<datetime.datetime> timestamp at point of db entry."
 }
@@ -52,7 +68,7 @@ All responses will have the form:
 - `"reminder":string` A reminder taken from an input.
 - `"completed":boolean` A boolean value based on completion of reminder/task.
 
-If a reminders with an identifier already exists, it will simply be overwritten.
+If a reminder with an identifier already exists, it will simply be overwritten.
 
 **Response**
 
@@ -65,9 +81,9 @@ If a reminders with an identifier already exists, it will simply be overwritten.
   "created_at": "[ 06-09-2020 21:21:48 PM ]"
 }
 ```
-- `404 NOT FOUND` if the reminders does not exist
+- `404 NOT FOUND` if the reminder does not exist
 
-## Delete a reminders
+## Delete a Reminder
 
 **Response**
 
@@ -75,6 +91,6 @@ If a reminders with an identifier already exists, it will simply be overwritten.
 
 `DELETE /reminders/<identifier>`
 
-- `404 NOT FOUND` if the reminders does not exist
+- `404 NOT FOUND` if the reminder does not exist.
 
 - `204 DELETED` if the reminder exists, and is deleted.
