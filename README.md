@@ -41,11 +41,11 @@ All responses will have the form:
 ]
 ```
 
-### Adding reminders
+### Adding/Creating a Reminder
 
 **Definition**
 
-`POST /create_reminders`
+`POST /create_reminder`
 
 **Arguments**
 

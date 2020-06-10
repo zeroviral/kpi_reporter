@@ -48,7 +48,7 @@ def index():
         return markdown(content)
 
 
-class ReminderList(Resource):
+class RemindersList(Resource):
     """
     Endpoint for dealing with the reminders list.
     """
@@ -71,6 +71,12 @@ class ReminderList(Resource):
 
         # Return our payload in the following format.
         return {'message': 'Success', 'data': reminders}
+
+
+class CreateReminder(Resource):
+    """
+    Endpoint for creating a SINGLE reminder.
+    """
 
     def post(self):
         parser = reqparse.RequestParser()
@@ -98,7 +104,7 @@ class ReminderList(Resource):
         return {'message': 'Reminder Registered', 'data': args}, 201
 
 
-class Reminders(Resource):
+class Reminder(Resource):
     """
     Endpoint for dealing with specified reminders individually.
     """
@@ -125,7 +131,10 @@ class Reminders(Resource):
 
 # Create our endpoints.
 # Endpoint for interacting with the remindersList() object and its methods.
-reminders_producer_api.add_resource(ReminderList, '/reminders')
+reminders_producer_api.add_resource(RemindersList, '/reminders')
 
 # Endpoint for interacting with the reminders() object and its methods.
-reminders_producer_api.add_resource(Reminders, '/reminders/<string:identifier>')
+reminders_producer_api.add_resource(Reminder, '/reminders/<string:identifier>')
+
+# Endpoint for creating a single reminder
+reminders_producer_api.add_resource(CreateReminder, '/create_reminder')
