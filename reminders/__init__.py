@@ -1,9 +1,7 @@
 import os
 import sqlite3
 import shelve
-import time
-import uuid
-import datetime
+from reminders.utils import get_timestamp, create_uuid
 from reminders.custom_logger import CustomLogger
 from flask_restful import Resource, Api, reqparse
 from markdown import markdown
@@ -37,24 +35,6 @@ def close_db(e=None):
         db.close()
 
 
-def create_uuid():
-    """
-    Creates a unique string identifier for use in our db.
-    :return: Unique string ID.
-    """
-    return uuid.uuid4().hex
-
-
-def get_timestamp():
-    """
-    Return current timestamp.
-    Output value ex: 2018-12-25 09:27:53
-    :return:
-    """
-    return str(datetime.datetime.fromtimestamp(time.time()).strftime(
-        '%m-%d-%Y %I:%M:%S%p'))
-
-
 @reminders_producer.route("/")
 def index():
     """
@@ -62,7 +42,6 @@ def index():
     :return: The readme.
     """
     with open(os.path.dirname(reminders_producer.root_path) + '/README.md', 'r') as readme:
-
         content = readme.read()
 
         # Returns an HTML readable format.
@@ -110,8 +89,8 @@ class ReminderList(Resource):
         args = parser.parse_args()
 
         # Here we can set the parameters uniquely.
-        args.identifier = create_uuid()
-        args.created_at = get_timestamp()
+        args.identifier = utils.create_uuid()
+        args.created_at = utils.get_timestamp()
 
         shelf = get_db()
         shelf[args['identifier']] = args
@@ -123,6 +102,7 @@ class Reminders(Resource):
     """
     Endpoint for dealing with specified reminders individually.
     """
+
     def get(self, identifier):
         shelf = get_db()
 
