@@ -2,6 +2,7 @@
 
 import requests
 import unittest
+import pytest
 
 TEST_DB = 'test.db'
 TEST_URL = 'http://localhost:5000'

@@ -9,10 +9,10 @@ from markdown import markdown
 from flask import Flask
 
 # Just creating an instance of Flask...
-reminders_producer = Flask(__name__)
+reminders_app = Flask(__name__)
 
 # Now creating the API...
-reminders_producer_api = Api(reminders_producer)
+reminders_producer_api = Api(reminders_app)
 
 # Set and nest the logger so we can access it globally, and singly as long as
 # the current server instance is up.
@@ -20,13 +20,13 @@ logger = CustomLogger()
 logger = logger.logger
 
 
-@reminders_producer.route("/")
+@reminders_app.route("/")
 def index():
     """
     Present the readme at the index, duh...
     :return: The readme.
     """
-    with open(os.path.dirname(reminders_producer.root_path) + '/README.md', 'r') as readme:
+    with open(os.path.dirname(reminders_app.root_path) + '/README.md', 'r') as readme:
         content = readme.read()
 
         # Returns an HTML readable format.
