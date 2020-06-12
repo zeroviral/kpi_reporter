@@ -2,7 +2,7 @@ from reminders import logger
 from reminders import reminders_producer
 
 
-def main():
+def run():
     port = 5000
     logger.info("Running app on port: %i" % port)
     reminders_producer.run(
@@ -14,4 +14,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run()

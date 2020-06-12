@@ -13,7 +13,7 @@ class CreateReminder(Resource):
         parser = reqparse.RequestParser()
 
         # Initialize our payload and the serialized object.
-        parser.add_argument('title_of_reminder', required=True)
+        parser.add_argument('reminder', required=True)
         parser.add_argument('completed', required=True)
 
         # We want to add a unique ID each time to the reminders.
