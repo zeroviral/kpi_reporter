@@ -1,5 +1,6 @@
 # KPI Reporter
-A grassroots reporter to sift information and curate reminders based on multiple sources of data.
+A grassroots reporter to sift information and curate reminders based on multiple
+sources of data.
 
 To run the server locally, please have Docker Engine installed and running.
 
@@ -32,7 +33,7 @@ All responses will have the form:
 }
 ```
 
-## List Of all reminders sorted by object reference
+## List of all Reminders sorted by object reference
 
 `GET /reminders`
 
