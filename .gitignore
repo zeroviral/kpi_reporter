@@ -4,3 +4,5 @@
 *.log
 *.iml
 /.idea
+.idea*
+**.idea**
