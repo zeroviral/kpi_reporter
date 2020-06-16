@@ -5,6 +5,10 @@ from flask import Flask, g
 
 # Initialize our DB.
 def get_db():
+    """
+    Initialize and return a db instance.
+    :return: A DB instance.
+    """
     if 'db' not in g:
         # TODO: Replace with our mongoDB instance.
         # g.db = sqlite3.connect(

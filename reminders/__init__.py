@@ -45,3 +45,4 @@ reminders_producer_api.add_resource(Reminder, '/reminders/<string:identifier>')
 # Endpoint for creating a single reminder
 # ACCEPTS: POST
 reminders_producer_api.add_resource(CreateReminder, '/create_reminder')
+
