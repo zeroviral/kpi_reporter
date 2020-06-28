@@ -17,7 +17,7 @@ docker-compose up --build
 
 After this, the server (with default settings) should then be running on 
 ```html
-http://localhost:5000/
+http://localhost:5000
 ```
 
 ## Usage
